@@ -1,3 +1,15 @@
 [submodule "PazuResource"]
 	path = PazuResource
 	url = https://github.com/AlpCanNalbant/PazuResource.git
+[submodule "ThirdParty/SOIL2"]
+	path = ThirdParty/SOIL2
+	url = https://github.com/SpartanJ/SOIL2.git
+[submodule "ThirdParty/SDL"]
+	path = ThirdParty/SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "ThirdParty/glew"]
+	path = ThirdParty/glew
+	url = https://github.com/nigels-com/glew.git
+[submodule "ThirdParty/mathfu"]
+	path = ThirdParty/mathfu
+	url = https://github.com/google/mathfu.git
