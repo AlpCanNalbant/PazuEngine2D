@@ -1,0 +1,189 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+		//
+		// BEGIN: Building Source Files of Pazu Engine 2D Project
+		//
+		{
+            "label": "C/C++ GCC: Create CMake Cache Files for Pazu Engine 2D (Debug)",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake",
+            "args": ["-G", "MinGW Makefiles", "-B", "${workspaceFolder}\\Build\\Debug", "-S", "${workspaceFolder}", "-D", "CMAKE_BUILD_TYPE=Debug" ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "none",
+            }
+        },
+        {
+            "label": "C/C++ GCC: Create CMake Cache Files for Pazu Engine 2D (Release)",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake",
+            "args": ["-G", "MinGW Makefiles", "-B", "${workspaceFolder}\\Build\\Release", "-S", "${workspaceFolder}", "-D", "CMAKE_BUILD_TYPE=Release" ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "none",
+            }
+        },
+        {
+            "label": "C/C++ GCC: Debug Build PazuEngine2D",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake --build . --target install --config Debug",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}\\Build\\Debug"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                // "isDefault": true
+            },
+            "dependsOn": [
+                "C/C++ GCC: Create CMake Cache Files for Pazu Engine 2D (Debug)"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "C/C++ GCC: Release Build PazuEngine2D",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake --build . --target install --config Release --parallel 8",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}\\Build\\Release"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                // "isDefault": true
+            },
+            "dependsOn": [
+                "C/C++ GCC: Create CMake Cache Files for Pazu Engine 2D (Release)"
+            ],
+            "dependsOrder": "sequence"
+        },
+		//
+		// END: Building Source Files of Pazu Engine 2D Project
+		//
+		//
+		// BEGIN: Building Source Files of Example Game Project
+		//
+        {
+            "label": "C/C++ GCC: Create CMake Cache Files for Example Game (Debug)",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake",
+            "args": ["-G", "MinGW Makefiles", "-B", "${workspaceFolder}\\ExampleGame\\Build\\Debug", "-S", "${workspaceFolder}\\ExampleGame", "-D", "CMAKE_BUILD_TYPE=Debug" ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "none",
+            }
+        },
+        {
+            "label": "C/C++ GCC: Create CMake Cache Files for Example Game (Release)",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake",
+            "args": ["-G", "MinGW Makefiles", "-B", "${workspaceFolder}\\ExampleGame\\Build\\Release", "-S", "${workspaceFolder}\\ExampleGame", "-D", "CMAKE_BUILD_TYPE=Release" ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "none",
+            }
+        },
+        {
+            "label": "C/C++ GCC: Debug Build ExampleGame",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake --build . --target install --config Debug",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}\\ExampleGame\\Build\\Debug"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "C/C++ GCC: Create CMake Cache Files for Example Game (Debug)"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "C/C++ GCC: Release Build ExampleGame",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake --build . --target install --config Release --parallel 8",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}\\ExampleGame\\Build\\Release"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                // "isDefault": true
+            },
+            "dependsOn": [
+                "C/C++ GCC: Create CMake Cache Files for Example Game (Release)"
+            ],
+            "dependsOrder": "sequence"
+        }
+		//
+		// END: Building Source Files of Example Game Project
+		//
+    ]
+}

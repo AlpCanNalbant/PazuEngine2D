@@ -13,6 +13,3 @@
 [submodule "ThirdParty/mathfu"]
 	path = ThirdParty/mathfu
 	url = https://github.com/google/mathfu.git
-[submodule "ThirdParty/WinAPICommon"]
-	path = ThirdParty/WinAPICommon
-	url = https://github.com/AlpCanNalbant/WinAPICommon.git
