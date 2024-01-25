@@ -1,0 +1,3 @@
+[submodule "PazuResource"]
+	path = PazuResource
+	url = https://github.com/AlpCanNalbant/PazuResource.git
