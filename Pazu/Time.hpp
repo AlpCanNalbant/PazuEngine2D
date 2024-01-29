@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_timer.h"

@@ -3,7 +3,9 @@ Build/
 bin/
 obj/
 temp/
+outputs/
 .vscode/*
+*.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/c_cpp_properties.json

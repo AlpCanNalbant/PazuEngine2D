@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include <algorithm>
 #include "Camera.hpp"
 #include "World.hpp"

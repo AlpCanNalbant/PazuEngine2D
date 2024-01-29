@@ -1,7 +1,8 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include <unordered_map>
 #include "SDL2/SDL.h"
-#include "mathfu/glsl_mappings.h"
 
 namespace Pazu
 {

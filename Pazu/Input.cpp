@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include <iostream>
 #include "Input.hpp"
 #include "World.hpp"

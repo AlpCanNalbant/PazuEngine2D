@@ -8,6 +8,7 @@ class App final : public Pazu::Application
 public:
 	App(const Pazu::Configuration &config);
 	void Initialize() final;
+	void Load() final;
 	void Update() final;
 	void PreRender() final;
 	void Render() final;

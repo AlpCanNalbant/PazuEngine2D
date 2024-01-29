@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include <iostream>
 #include "GL/glew.h"
 #include "Application.hpp"
@@ -7,13 +9,13 @@ namespace Pazu
 	Application::Application(const Configuration &config)
 		: world{std::make_shared<World>()}, stateMgr{std::make_shared<StateManager>()}, resource{std::make_shared<ResourceManager>()}, input{std::make_shared<Input>()}, time{std::make_shared<Time>()}
 	{
-		Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "Log.txt";
+		Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "PazuEngine2D.log";
 		std::cout << "Pazu Engine 2D is has been started." << std::endl;
     	Wcm::Log->Info("Pazu Engine 2D is has been started.");
 
 		if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
 		{
-			std::cout << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
+			std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
 			Wcm::Log->Error("Failed to initialize SDL.").Sub("SDLError", SDL_GetError());
 			return;
 		}
@@ -64,7 +66,7 @@ namespace Pazu
 		}
 		else
 		{
-			std::cout << "Failed to create SDL window: " << SDL_GetError() << std::endl;
+			std::cerr << "Failed to create SDL window: " << SDL_GetError() << std::endl;
 			Wcm::Log->Error("Failed to create SDL window.").Sub("SDLError", SDL_GetError());
 			return;
 		}
@@ -75,7 +77,7 @@ namespace Pazu
 		GLenum err = glewInit();
 		if (err != GLEW_OK)
 		{
-			std::cout << "Failed to initialize GLEW: " << glewGetErrorString(err) << std::endl;
+			std::cerr << "Failed to initialize GLEW: " << glewGetErrorString(err) << std::endl;
 			Wcm::Log->Error("Failed to initialize GLEW.").Sub("GLEWError", reinterpret_cast<const char *>(glewGetErrorString(err)));
 			return;
 		}
@@ -94,7 +96,6 @@ namespace Pazu
 
 		world->Initialize();
 		stateMgr->Initialize();
-		resource->Initialize();
 		input->Initialize();
 		time->Initialize();
 
@@ -105,6 +106,9 @@ namespace Pazu
 	void Application::Run()
 	{
 		Initialize();
+		resource->Initialize();
+		Load();
+		stateMgr->Load();
 
 		while (!exitApp)
 		{

@@ -1,21 +1,23 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 namespace Pazu
 {
 	template<typename T>
-	std::shared_ptr<T> ResourceManager::Load(const std::string &resourcePath)
+	std::shared_ptr<T> ResourceManager::Load(const std::string &resourcePath) const
 	{
-		if (cache[resourcePath] != nullptr)
+		if (const auto pos = cache.find(resourcePath); pos != cache.cend())
         {
-			return std::dynamic_pointer_cast<T>(cache[resourcePath]);
+			return std::dynamic_pointer_cast<T>(pos->second);
         }
 		if constexpr (std::is_same_v<T, Shader>)
         {
-			return std::dynamic_pointer_cast<T>(resourceLoaders[std::type_index(typeid(ShaderLoader))]->LoadResource(resourcePath));
+			return std::dynamic_pointer_cast<T>(resourceLoaders.find(typeid(ShaderLoader))->second->LoadResource(resourcePath));
         }
 		else if constexpr (std::is_same_v<T, Texture>)
         {
-			return std::dynamic_pointer_cast<T>(resourceLoaders[std::type_index(typeid(TextureLoader))]->LoadResource(resourcePath));
+			return std::dynamic_pointer_cast<T>(resourceLoaders.find(typeid(TextureLoader))->second->LoadResource(resourcePath));
         }
-		std::cout << "Invalid resource type.\n";
+		std::cerr << "Invalid resource type.\n";
 		Wcm::Log->Error("Invalid resource type.");
 		return nullptr;
 	}

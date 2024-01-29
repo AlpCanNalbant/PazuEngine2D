@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include "Sprite.hpp"
 #include "Material.hpp"
 #include "Camera.hpp"

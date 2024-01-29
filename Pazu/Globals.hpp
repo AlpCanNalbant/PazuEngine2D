@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include <memory>
 #include <numbers>
@@ -5,6 +7,10 @@
 
 namespace Pazu
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-qualifiers"
+#pragma GCC diagnostic ignored "-Wliteral-suffix"
+
 	inline const unsigned char *const operator"" UC(const char *const str, size_t) noexcept
 	{
 		return reinterpret_cast<const unsigned char *const>(str);
@@ -56,6 +62,8 @@ namespace Pazu
 		return static_cast<const float>(rad) * 180.0f / std::numbers::pi_v<float>;
 	}
 
+#pragma GCC diagnostic pop
+
 	template <typename T>
 	void SafeDelete(T *value)
 	{
@@ -85,5 +93,4 @@ namespace Pazu
 	}
 
 	extern std::shared_ptr<Shader> DefaultShader;
-	extern std::string ResourcesPath;
 }

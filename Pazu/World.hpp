@@ -1,11 +1,13 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include <vector>
 #include <iostream>
 #include <memory>
+#include "Camera.hpp"
 
 namespace Pazu
 {
-	class Camera;
 	class Sprite;
 	class Gui;
 	class StateManager;

@@ -141,7 +141,7 @@
                 "color": "terminal.ansiYellow"
             },
             "type": "shell",
-            "command": "cmake --build . --target install --config Debug",
+            "command": "cmake --build . --target install --config Debug --parallel 8",
             "args": [],
             "options": {
                 "cwd": "${workspaceFolder}\\ExampleGame\\Build\\Debug"

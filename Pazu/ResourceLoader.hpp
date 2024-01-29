@@ -1,10 +1,17 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include <string>
-#include "Resource.hpp"
 
 namespace Pazu
 {
 	class ResourceManager;
+
+	class Resource
+	{
+	public:
+		virtual ~Resource() = default;
+	};
 
 	class ResourceLoader
 	{

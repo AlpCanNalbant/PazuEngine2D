@@ -1,7 +1,8 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include "GL/glew.h"
 #include "Shader.hpp"
-#include "ResourceLoader.hpp"
 
 namespace Pazu
 {
@@ -15,9 +16,13 @@ namespace Pazu
 
 	private:
 		bool LoadShader(Shader& shader, const std::string &path) const;
-		bool CreateShader(Shader& shader, std::istream &&is) const;
-		void CompileShader(Shader& shader, const char* code, GLenum shaderType, GLuint& shaderID) const;
+		bool CreateShader(Shader &shader, std::istream &&stream) const;
+		void CompileShader(Shader& shader, const GLchar* code, GLenum shaderType, GLuint& shaderID) const;
 		void Link(Shader& shader, GLuint& vertShaderID, GLuint& fragShaderID) const;
 		void GetActiveUniforms(Shader& shader) const;
+		void FillVertexShaderCode(std::istream &stream, std::string &currentLine, std::string &vertShaderCode) const;
+		void FillFragmentShaderCode(std::istream &stream, std::string &currentLine, std::string &fragShaderCode) const;
+
+		std::string_view fragShaderTitle{"FRAGMENT"}, vertShaderTitle{"VERTEX"};
 	};
 }

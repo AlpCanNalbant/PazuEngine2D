@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include "SDL2/SDL.h"
 #include "World.hpp"
 #include "Camera.hpp"

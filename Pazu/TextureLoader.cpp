@@ -1,6 +1,8 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include <iostream>
-#include "SOIL2/SOIL2.h"
-#include "ResourceManager/ResourceHandle.h"
+#include "SOIL2.h"
+#include "Pazu/Resource.hpp"
 #include "TextureLoader.hpp"
 #include "ResourceManager.hpp"
 
@@ -23,10 +25,10 @@ namespace Pazu
 
 	bool TextureLoader::LoadTexture(Texture& texture, const std::string &path) const
 	{
-		ResourceHandle rh(manager->GetBasePath(true) + path);
-		if (!rh.isValid())
+		const auto res = GetResource(manager->GetBasePath(true) + path);
+		if (!res)
 		{
-			std::cout << "Texture is cannot loaded from in the memory trying to load from in the disk...\n";
+			std::cerr << "Texture is cannot loaded from in the memory trying to load from in the disk...\n";
 			Wcm::Log->Info("Texture is cannot loaded from in the memory trying to load from in the disk...");
 			// If we cannot load the texture file from in the memory then try to load from in the disk.
 			texture.texID = SOIL_load_OGL_texture
@@ -36,9 +38,9 @@ namespace Pazu
 				SOIL_CREATE_NEW_ID,
 				SOIL_FLAG_MIPMAPS
 			);
-			if (texture.texID == 0)
+			if (!texture.texID)
 			{
-				std::cout << "Texture loading error: " << SOIL_last_result() << std::endl;
+				std::cerr << "Texture loading error: " << SOIL_last_result() << std::endl;
 				Wcm::Log->Error("Texture loading error.").Sub("SOILError", SOIL_last_result());
 				return false;
 			}
@@ -47,15 +49,15 @@ namespace Pazu
 		{
 			texture.texID = SOIL_load_OGL_texture_from_memory
 			(
-				rh.data(),
-				rh.length(),
+				res.value().data(),
+				res.value().length(),
 				SOIL_LOAD_AUTO,
 				SOIL_CREATE_NEW_ID,
 				SOIL_FLAG_MIPMAPS
 			);
-			if (texture.texID == 0)
+			if (!texture.texID)
 			{
-				std::cout << "Texture loading error: " << SOIL_last_result() << std::endl;
+				std::cerr << "Texture loading error: " << SOIL_last_result() << std::endl;
 				Wcm::Log->Error("Texture loading error.").Sub("SOILError", SOIL_last_result());
 				return false;
 			}

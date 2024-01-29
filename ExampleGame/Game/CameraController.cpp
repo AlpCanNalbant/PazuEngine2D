@@ -34,14 +34,14 @@ void CameraController::HandleMovement(float dt)
 		camPos += mathfu::vec2(moveSpeed * dt, 0.0f);
 	}
 
-	camera->position = mathfu::vec2::Lerp(camera->position, camPos, dt * 60.0f);
+	camera->position = mathfu::vec2::Lerp(camera->position, camPos, dt);
 }
 
 void CameraController::HandleZoom(float dt)
 {
 	camZoom += input->GetMouseWheelDelta() * zoomingSpeed * dt;
 
-	camera->zoom = mathfu::Lerp(camera->zoom, camZoom, dt * 200.0f);
+	camera->zoom = mathfu::Lerp(camera->zoom, camZoom, dt);
 
     camera->zoom = std::clamp(camera->zoom, 0.4f, 8.0f);
 	camZoom = std::clamp(camZoom, 0.5f, 7.0f);

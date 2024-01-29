@@ -1,7 +1,8 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include <string>
 #include "Texture.hpp"
-#include "ResourceLoader.hpp"
 
 namespace Pazu
 {

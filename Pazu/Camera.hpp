@@ -1,5 +1,6 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
-#include "mathfu/glsl_mappings.h"
 #include "Entity.hpp"
 
 namespace Pazu

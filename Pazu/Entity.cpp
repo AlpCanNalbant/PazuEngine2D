@@ -1,4 +1,5 @@
-#include "mathfu/constants.h"
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include "Entity.hpp"
 
 namespace Pazu
@@ -40,7 +41,7 @@ namespace Pazu
 		{
 			SetWorldTransform(parent->worldTransform
 				* (mathfu::mat4::FromTranslationVector({position.x, position.y, 1.0f})
-				*  mathfu::mat4::FromRotationMatrix(mathfu::mat3::RotationZ(rotation))
+				*  mathfu::mat4::FromRotationMatrix(mathfu::mat3::RotationZ(rotation * mathfu::kDegreesToRadians))
 				*  mathfu::mat4::FromScaleVector({scale.x, scale.y, 1.0f})));
 			worldTransform[14] = layer;
 		}
@@ -66,7 +67,7 @@ namespace Pazu
 		}
 		else
 		{
-			// Refer: https://eecs.qmul.ac.uk/~gslabaugh/publications/euler.pdf
+			// Referred to: https://eecs.qmul.ac.uk/~gslabaugh/publications/euler.pdf
 			return std::atan2(worldTransform[1] / std::cos(4.0f / M_PI), worldTransform[0] / std::cos(4.0f / M_PI));
 		}
 	}

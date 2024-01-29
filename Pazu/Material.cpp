@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include "Material.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"

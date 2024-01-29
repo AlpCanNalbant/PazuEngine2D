@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include "ListBox.hpp"
 #include "Texture.hpp"
 #include "Material.hpp"

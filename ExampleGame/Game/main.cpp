@@ -1,7 +1,8 @@
 #include "App.hpp"
 
-int main(int argc, char *args[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 {
+	Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "ExampleGame.log";
 	App editor({.title = "Splash Screen", .width = 1280, .height = 800, .borderless = false});
 
 	editor.Run();

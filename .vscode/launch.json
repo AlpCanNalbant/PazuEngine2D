@@ -1,19 +1,18 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-        //
-        // Debugging Launcher of Example Game Project
-        //
+    //
+    // Debugging Launcher of Example Game Project
+    //
+    "configurations": [
         {
             "name": "C/C++ GDB: Launch ExampleGame",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Pazu2DGame.exe",
+            "program": "${workspaceFolder}/ExampleGame/bin/Debug/PazuEngine2DGame.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
             "setupCommands": [

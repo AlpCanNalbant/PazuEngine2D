@@ -1,7 +1,8 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include "GL/glew.h"
-#include "mathfu/glsl_mappings.h"
-#include "Resource.hpp"
+#include "ResourceLoader.hpp"
 
 namespace Pazu
 {

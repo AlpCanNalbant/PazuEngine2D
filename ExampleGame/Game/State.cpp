@@ -48,10 +48,10 @@ void State::Resize(int width, int height)
 
 void State::Update()
 {
-	float dt = time->GetDelta();
+	const float dt = time->GetDelta() * 3600.0f;
 	for (auto spr : sprites)
 	{
-		spr->Turn(dt * 360.0f);
+		spr->Turn(dt);
 		mathfu::vec2 mousePos = camera->GetScreenToWorldPoint(input->GetMousePosition());
 		spr->Drag(mousePos, input->IsMouseDown(SDL_BUTTON_LEFT));
 	}
@@ -60,11 +60,15 @@ void State::Update()
 	{
 		kurdele->SetDisableRender(true);
 	}
-	else if (input->IsKeyHit(SDLK_t))
+	else if (input->IsKeyUp(SDLK_r))
 	{
 		kurdele->SetDisableRender(false);
 	}
-	else if (input->IsKeyHit(SDLK_DELETE))
+	else if (input->IsKeyUp(SDLK_q))
+	{
+		kurdele->SetParent(nullptr);
+	}
+	else if (input->IsKeyUp(SDLK_DELETE))
 	{
 		kurdele = nullptr;
 	}

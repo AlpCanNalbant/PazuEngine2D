@@ -1,6 +1,7 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include "SDL2/SDL.h"
-#include "mathfu/glsl_mappings.h"
 #include "Configuration.hpp"
 #include "StateManager.hpp"
 #include "ResourceManager.hpp"
@@ -21,6 +22,7 @@ namespace Pazu
 		void Run();
 		void Shutdown();
 		virtual void Initialize() = 0;
+		virtual void Load() = 0;
 		virtual void Update() = 0;
 		virtual void PreRender() = 0;
 		virtual void Render() = 0;

@@ -1,7 +1,9 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "ResourceManager/ResourceHandle.h"
+#include "Pazu/Resource.hpp"
 #include "ShaderLoader.hpp"
 #include "ResourceManager.hpp"
 
@@ -25,61 +27,52 @@ namespace Pazu
 
 	bool ShaderLoader::LoadShader(Shader& shader, const std::string &path) const
 	{
-		const ResourceHandle rh(manager->GetBasePath(true) + path);
-		if (!rh.isValid())
+		const auto res = GetResource(manager->GetBasePath(true) + path);
+		if (!res)
 		{
-			std::cout << "Shader is cannot loaded from in the memory trying to load from in the disk...\n";
+			std::cerr << "Shader is cannot loaded from in the memory trying to load from in the disk...\n";
 			Wcm::Log->Info("Shader is cannot loaded from in the memory trying to load from in the disk...");
 			// If we cannot load the shader file from in the memory then try to load from in the disk.
 			std::ifstream infile(manager->GetBasePath() + path);
 			if (!infile.is_open())
 			{
-				std::cout << "Shader file does not exist at '" + path + "'.\n";
+				std::cerr << "Shader file does not exist at '" + path + "'.\n";
 				Wcm::Log->Error("Shader file does not exist.").Sub("Shader", manager->GetBasePath() + path);
 				return false;
 			}
 			return CreateShader(shader, std::move(infile));
 		}
-		return CreateShader(shader, std::istringstream{rh.string()});
+		return CreateShader(shader, std::istringstream{reinterpret_cast<const char *>(res.value().data())});
 	}
 
-	bool ShaderLoader::CreateShader(Shader& shader, std::istream &&is) const
+	bool ShaderLoader::CreateShader(Shader& shader, std::istream &&stream) const
 	{
 		shader.programID = glCreateProgram();
 		GLuint vertShaderID, fragShaderID;
-		std::string currentLine;
-		std::string shaderCode;
-		while (currentLine.find("FRAGMENT") == std::string::npos)
+		std::string currentLine, vertShaderCode, fragShaderCode;
+		bool isFragTitleFound, isVertTitleFound, isEndOfFile;
+		while (isEndOfFile)
 		{
-			std::getline(is, currentLine);
-
-			if (currentLine.length() < 1 || currentLine.find("VERTEX") != std::string::npos)
+			if (vertShaderCode.empty() && (isVertTitleFound = currentLine.find(vertShaderTitle) != std::string::npos))
+			{
+				FillVertexShaderCode(stream, currentLine, vertShaderCode);
 				continue;
-
-			shaderCode += currentLine + '\n';
+			}
+			if (fragShaderCode.empty() && (isFragTitleFound = currentLine.find(fragShaderTitle) != std::string::npos))
+			{
+				FillFragmentShaderCode(stream, currentLine, fragShaderCode);
+				continue;
+			}
+			isEndOfFile = static_cast<bool>(std::getline(stream, currentLine));
 		}
 
-		// Vertex shader
-		CompileShader(shader, shaderCode.c_str(), GL_VERTEX_SHADER, vertShaderID);
-		shaderCode.clear();
-
-		while (std::getline(is, currentLine))
-		{
-			if (currentLine.length() < 1)
-				continue;
-
-			shaderCode += currentLine + '\n';
-		}
-
-		// Fragment shader
-		CompileShader(shader, shaderCode.c_str(), GL_FRAGMENT_SHADER, fragShaderID);
-
+		CompileShader(shader, vertShaderCode.c_str(), GL_VERTEX_SHADER, vertShaderID);
+		CompileShader(shader, fragShaderCode.c_str(), GL_FRAGMENT_SHADER, fragShaderID);
 		Link(shader, vertShaderID, fragShaderID);
-
 		return true;
 	}
 
-	void ShaderLoader::CompileShader(Shader& shader, const char* code, GLenum shaderType, GLuint& shaderID) const
+	void ShaderLoader::CompileShader(Shader& shader, const GLchar* code, GLenum shaderType, GLuint& shaderID) const
 	{
 		GLint compiled;
 		char infoLog[1024];
@@ -93,7 +86,7 @@ namespace Pazu
 		if (!compiled)
 		{
 			glGetShaderInfoLog(shaderID, 1024, nullptr, infoLog);
-			std::cout << "Fragment shader compilation error.\n" << infoLog << std::endl;
+			std::wcerr << "Fragment shader compilation error.\n" << infoLog << std::endl;
 			Wcm::Log->Error("Fragment shader compilation error.").Sub("GLError", infoLog);
 		}
 	}
@@ -109,7 +102,7 @@ namespace Pazu
 		if (!linked)
 		{
 			glGetProgramInfoLog(shader.programID, 1024, nullptr, infoLog);
-			std::cout << "Program linking error.\n" << infoLog << std::endl;
+			std::cerr << "Program linking error.\n" << infoLog << std::endl;
 			Wcm::Log->Error("Program linking error.").Sub("GLError", infoLog);
 		}
 
@@ -135,6 +128,22 @@ namespace Pazu
 			glGetActiveUniform(shader.programID, (GLuint)i, bufSize, &lenght, &size, &type, name);
 
 			shader.uniforms.insert(std::make_pair(name, glGetUniformLocation(shader.programID, name)));
+		}
+	}
+
+	void ShaderLoader::FillVertexShaderCode(std::istream &stream, std::string &currentLine, std::string &vertShaderCode) const
+	{
+		while (std::getline(stream, currentLine) && currentLine.find(fragShaderTitle) != std::string::npos)
+		{
+			vertShaderCode += currentLine + '\n';
+		}
+	}
+
+	void ShaderLoader::FillFragmentShaderCode(std::istream &stream, std::string &currentLine, std::string &fragShaderCode) const
+	{
+		while (std::getline(stream, currentLine) && currentLine.find(vertShaderTitle) != std::string::npos)
+		{
+			fragShaderCode += currentLine + '\n';
 		}
 	}
 }

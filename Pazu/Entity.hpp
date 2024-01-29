@@ -1,9 +1,8 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #pragma once
 #include <vector>
 #include <memory>
-#include "mathfu/glsl_mappings.h"
-#include "mathfu/matrix.h"
-#include "mathfu/vector.h"
 
 namespace Pazu
 {

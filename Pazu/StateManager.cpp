@@ -1,3 +1,5 @@
+// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
+
 #include "StateManager.hpp"
 #include "Globals.hpp"
 #include "World.hpp"
@@ -35,7 +37,6 @@ namespace Pazu
 		ClearStates();
 
 		states.push_back(state);
-		state->Load();
 	}
 
 	void StateManager::AddState(State* state)
@@ -46,7 +47,6 @@ namespace Pazu
 		}
 
 		states.push_back(state);
-		state->Load();
 	}
 
 	void StateManager::RemoveState(State* state)
@@ -69,9 +69,9 @@ namespace Pazu
 
 	void StateManager::Load() const
 	{
-		if (!states.empty())
+		for (const auto state : states)
 		{
-			states.back()->Load();
+			state->Load();
 		}
 	}
 

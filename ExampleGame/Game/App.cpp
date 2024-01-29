@@ -8,20 +8,25 @@ App::App(const Pazu::Configuration &config)
 void App::Initialize()
 {
 	SetVsync(true);
-	resource->SetBasePath("Assets");
 	// resource->SetRelativeMode(false);
-	// resource->SetBasePath(Wcm::ToString(Wcm::GetBaseDirectory()) + "/Assets", "Assets");
+	// resource->SetBasePath({Wcm::GetBaseDirectory() / "Assets", "Assets"});
+	resource->SetBasePath("Assets"); // By default relative mode is true.
 	stateMgr->AddState(new State(resource, camera, input, time));
+}
+
+void App::Load()
+{
 }
 
 void App::Update()
 {
+	const float dt = time->GetDelta() * 3600.0f;
 	if (input->IsKeyDown(SDLK_ESCAPE))
 	{
 		exitApp = true;
 	}
 
-	camController->Update(time->GetDelta());
+	camController->Update(dt);
 
 	bool show;
 	int fps = time->GetFps(&show);
