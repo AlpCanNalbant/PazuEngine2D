@@ -1,2 +1,5 @@
-LoadFromDisk=False
 LoadFromBinary=True
+LoadFromDisk=False
+
+BinaryResourceLoadPath=
+DiskResourceLoadPath=
