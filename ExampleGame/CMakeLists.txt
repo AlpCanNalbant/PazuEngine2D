@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 project(ExampleGame LANGUAGES CXX)
 
-set_property(GLOBAL PROPERTY PAZU_ENGINE_2D_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/obj/${CMAKE_BUILD_TYPE}")
+set_property(GLOBAL PROPERTY PAZU_ENGINE_2D_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/deps/PazuEngine2D")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/.." "${CMAKE_BINARY_DIR}/deps/PazuEngine2D")
 
 file(GLOB_RECURSE SPLASH_SCREEN_SOURCE "./Game/*.hpp" "./Game/*.inl" "./Game/*.cpp")
