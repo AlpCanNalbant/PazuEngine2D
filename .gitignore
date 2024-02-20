@@ -1,11 +1,13 @@
-# Ignore specified folders.
+# Ignore specified folders and files.
 Build/
 bin/
 obj/
 temp/
 outputs/
-.vscode/*
 *.log
+*.exe
+.vscode/*
+# Don't ignore specified folders and files.
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/c_cpp_properties.json
