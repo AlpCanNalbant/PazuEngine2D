@@ -23,19 +23,19 @@ namespace Pazu
 		}
 	}
 
-	void ListBox::AddElements(std::string text[])
+	void ListBox::AddElements([[maybe_unused]] std::string text[])
 	{
 	}
 
-	void ListBox::SetElementTexture(Texture * texture, int index)
+	void ListBox::SetElementTexture([[maybe_unused]] Texture * texture, [[maybe_unused]] int index)
 	{
 	}
 
-	void ListBox::SetElementColor(mathfu::vec3 color, int index)
+	void ListBox::SetElementColor([[maybe_unused]] mathfu::vec3 color, [[maybe_unused]] int index)
 	{
 	}
 
-	void ListBox::SetElementText(std::string text, int index)
+	void ListBox::SetElementText([[maybe_unused]] std::string text, [[maybe_unused]] int index)
 	{
 	}
 }
