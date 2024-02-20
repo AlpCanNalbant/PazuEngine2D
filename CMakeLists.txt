@@ -1,16 +1,28 @@
 cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 project(PazuEngine2D LANGUAGES CXX)
 
-# You can set the different installation directory for Pazu Engine 2D via calling the 'set_pazuengine2d_install_dir("...")' function.
-set(PAZU_ENGINE_2D_DEFAULT_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/obj/${CMAKE_BUILD_TYPE}")
+# Before adding this subdirectory for your cmake project, you can set the different installation directory for the Pazu Engine 2D,
+# via calling the 'set_pazuengine2d_install_dir("...")' function or you can edit PazuEngine2D_INSTALL_HOME variable's value with cmake-gui application.
 function(set_pazuengine2d_install_dir dir)
-	set(PazuEngine2D_INSTALL_HOME "${dir}" CACHE STRING "Installation directory of the Pazu Engine 2D." FORCE)
+	set(options OVERWRITE)
+	cmake_parse_arguments(PARSED_ARGS "${options}" "dummy1" "dummy2" ${ARGN})
+	if(${PARSED_ARGS_OVERWRITE})
+		set(OVERWRITE_OPTION FORCE)
+	else()
+		set(OVERWRITE_OPTION)
+	endif()
+	set(PazuEngine2D_INSTALL_HOME "${dir}" CACHE STRING "Installation directory of the Pazu Engine 2D." ${OVERWRITE_OPTION})
 endfunction()
+
+# Default installation directory of the Pazu Engine 2D.
+set(PAZU_ENGINE_2D_DEFAULT_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+# Set the base directory of to its default value if it is not already setted.
 set_pazuengine2d_install_dir("${PAZU_ENGINE_2D_DEFAULT_INSTALL_DIR}")
+
 get_property(PazuEngine2DInstallDir GLOBAL PROPERTY PAZU_ENGINE_2D_INSTALL_DIR)
 if (NOT "${PazuEngine2DInstallDir}" STREQUAL "")
 	if ("${PazuEngine2D_INSTALL_HOME}" STREQUAL "${PAZU_ENGINE_2D_DEFAULT_INSTALL_DIR}")
-		set_pazuengine2d_install_dir("${PazuEngine2DInstallDir}")
+		set_pazuengine2d_install_dir("${PazuEngine2DInstallDir}" OVERWRITE)
 	endif()
 endif()
 
@@ -24,7 +36,7 @@ add_subdirectory("PazuResource")
 find_package(OpenGL REQUIRED)
 find_package(SDL2 REQUIRED)
 
-file(GLOB_RECURSE PazuEngine2D_SOURCE CONFIGURE_DEPENDS "./Pazu/*.hpp" "./Pazu/*.inl" "./Pazu/*.cpp")
+file(GLOB_RECURSE PazuEngine2D_SOURCE CONFIGURE_DEPENDS "Pazu/*.hpp" "Pazu/*.inl" "Pazu/*.cpp")
 
 add_library(${PROJECT_NAME} STATIC ${PazuEngine2D_SOURCE})
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME PazuEngine2D CXX_STANDARD ${WINAPICOMMON_CPP_VERSION} CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF)
@@ -46,4 +58,4 @@ target_link_libraries(${PROJECT_NAME}
 
 message("Installing Pazu Engine 2D ...")
 install(TARGETS ${PROJECT_NAME}
-	ARCHIVE DESTINATION ${PazuEngine2D_INSTALL_HOME})
+	ARCHIVE DESTINATION ${PazuEngine2D_INSTALL_HOME}/obj/${CMAKE_BUILD_TYPE})
