@@ -3,7 +3,12 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                // "${workspaceFolder}/**",
+                "${workspaceFolder}/Pazu/*",
+                "${workspaceFolder}/PazuResource/Pazu/**",
+                "${workspaceFolder}/PazuResource/deps/WinAPICommon/src/*",
+                "${workspaceFolder}/ThirdParty/mathfu/include/*",
+                "${workspaceFolder}/ThirdParty/mathfu/dependencies/vectorial/include/*"
             ],
             "forcedInclude": [
                 "${workspaceFolder}/Pazu/Precompiled.hpp",
