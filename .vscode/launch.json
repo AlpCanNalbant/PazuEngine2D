@@ -10,7 +10,7 @@
             "program": "${workspaceFolder}/ExampleGame/bin/Debug/PazuEngine2DGame.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}/ExampleGame/bin/Debug",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
