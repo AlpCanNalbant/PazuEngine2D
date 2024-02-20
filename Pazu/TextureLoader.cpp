@@ -10,7 +10,6 @@ namespace Pazu
 {
 	std::shared_ptr<Resource> TextureLoader::LoadResource(const std::string &resourcePath)
 	{
-		std::cout << "New texture is loading... Texture: " + resourcePath + '\n';
 		Wcm::Log->Info("New texture is loading...").Sub("Texture", resourcePath);
 
 		const auto texture = std::make_shared<Texture>();
@@ -25,10 +24,8 @@ namespace Pazu
 
 	bool TextureLoader::LoadTexture(Texture& texture, const std::string &path) const
 	{
-		const auto res = GetResource(manager->GetBasePath(true) + path);
-		if (!res)
+		if (const auto res = GetResource(manager->GetBasePath(true) + path); !res)
 		{
-			std::cerr << "Texture is cannot loaded from in the memory trying to load from in the disk...\n";
 			Wcm::Log->Info("Texture is cannot loaded from in the memory trying to load from in the disk...");
 			// If we cannot load the texture file from in the memory then try to load from in the disk.
 			texture.texID = SOIL_load_OGL_texture
@@ -38,12 +35,6 @@ namespace Pazu
 				SOIL_CREATE_NEW_ID,
 				SOIL_FLAG_MIPMAPS
 			);
-			if (!texture.texID)
-			{
-				std::cerr << "Texture loading error: " << SOIL_last_result() << std::endl;
-				Wcm::Log->Error("Texture loading error.").Sub("SOILError", SOIL_last_result());
-				return false;
-			}
 		}
 		else
 		{
@@ -55,12 +46,11 @@ namespace Pazu
 				SOIL_CREATE_NEW_ID,
 				SOIL_FLAG_MIPMAPS
 			);
-			if (!texture.texID)
-			{
-				std::cerr << "Texture loading error: " << SOIL_last_result() << std::endl;
-				Wcm::Log->Error("Texture loading error.").Sub("SOILError", SOIL_last_result());
-				return false;
-			}
+		}
+		if (!texture.texID)
+		{
+			Wcm::Log->Error("Texture loading error.").Sub("SOILError", SOIL_last_result());
+			return false;
 		}
 
 		glBindTexture(GL_TEXTURE_2D, texture.texID);
