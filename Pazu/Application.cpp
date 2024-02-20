@@ -10,12 +10,10 @@ namespace Pazu
 		: world{std::make_shared<World>()}, stateMgr{std::make_shared<StateManager>()}, resource{std::make_shared<ResourceManager>()}, input{std::make_shared<Input>()}, time{std::make_shared<Time>()}
 	{
 		Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "PazuEngine2D.log";
-		std::cout << "Pazu Engine 2D is has been started." << std::endl;
     	Wcm::Log->Info("Pazu Engine 2D is has been started.");
 
 		if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
 		{
-			std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
 			Wcm::Log->Error("Failed to initialize SDL.").Sub("SDLError", SDL_GetError());
 			return;
 		}
@@ -66,7 +64,6 @@ namespace Pazu
 		}
 		else
 		{
-			std::cerr << "Failed to create SDL window: " << SDL_GetError() << std::endl;
 			Wcm::Log->Error("Failed to create SDL window.").Sub("SDLError", SDL_GetError());
 			return;
 		}
@@ -77,7 +74,6 @@ namespace Pazu
 		GLenum err = glewInit();
 		if (err != GLEW_OK)
 		{
-			std::cerr << "Failed to initialize GLEW: " << glewGetErrorString(err) << std::endl;
 			Wcm::Log->Error("Failed to initialize GLEW.").Sub("GLEWError", reinterpret_cast<const char *>(glewGetErrorString(err)));
 			return;
 		}
@@ -99,7 +95,6 @@ namespace Pazu
 		input->Initialize();
 		time->Initialize();
 
-		std::cout << "Pazu Engine 2D is successfully initialized." << std::endl;
     	Wcm::Log->Info("Pazu Engine 2D is successfully initialized.");
 	}
 
@@ -147,7 +142,6 @@ namespace Pazu
 
 		Destroy();
 
-		std::cout << "Pazu Engine 2D is has been ended." << std::endl;
     	Wcm::Log->Info("Pazu Engine 2D is has been ended.");
 	}
 
