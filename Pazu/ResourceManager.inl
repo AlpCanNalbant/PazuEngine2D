@@ -17,7 +17,6 @@ namespace Pazu
         {
 			return std::dynamic_pointer_cast<T>(resourceLoaders.find(typeid(TextureLoader))->second->LoadResource(resourcePath));
         }
-		std::cerr << "Invalid resource type.\n";
 		Wcm::Log->Error("Invalid resource type.");
 		return nullptr;
 	}

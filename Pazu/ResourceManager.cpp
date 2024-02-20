@@ -76,47 +76,10 @@ namespace Pazu
     void ResourceManager::RegisterAssets()
     {
 		projectAssetDir = projectAssetDir.parent_path() / basePaths[1];
-		std::wifstream ifs;
-		std::wstring line;
-		constexpr std::wstring_view diskSetting = L"LoadFromDisk=";
-		constexpr std::wstring_view binarySetting = L"LoadFromBinary=";
 		auto defaultShader = GetDefaultShader();
 		const auto &defaultShaderPaths = defaultShader.second;
-		std::wstring binaryResourceList = L'\"' + defaultShaderPaths[0] + L"\" \"" + defaultShaderPaths[1] + L"\" ";
-		for (const auto &item : std::filesystem::recursive_directory_iterator(projectAssetDir))
-		{
-			if (item.is_regular_file())
-			{
-				if (const auto resInfoFile = item.path().native() + L".res"; std::filesystem::is_regular_file(resInfoFile))
-				{
-					ifs.open(resInfoFile.data());
-					if (!ifs.is_open())
-					{
-						Wcm::Log->Error("Resource information file is cannot opened.").Sub("ResourceInfoFile", resInfoFile);
-						continue;
-					}
-					while (std::getline(ifs, line))
-					{
-						if (const auto pos = line.find(diskSetting); pos != std::string::npos)
-						{
-							if (Wcm::IsSameString<wchar_t>(line.substr(pos + diskSetting.size(), 4), L"True"))
-							{
-								Wcm::UpdateFileContent(item.path(), Wcm::GetBaseDirectory() / Wcm::CutPath(item.path(), "Assets", true));
-							}
-						}
-						if (const auto pos = line.find(binarySetting); pos != std::string::npos)
-						{
-							if (Wcm::IsSameString<wchar_t>(line.substr(pos + binarySetting.size(), 4), L"True"))
-							{
-								binaryResourceList += L'\"' + Wcm::CutPath(item.path(), "Assets", true).native() + L"\" \"" + item.path().native() + L"\" ";
-							}
-						}
-					}
-					ifs.close();
-				}
-			}
-		}
-		Wcm::Execute(GetGeneratorPath(), binaryResourceList);
+		std::wstring binaryResourceList = Wcm::ToQuoted(defaultShaderPaths[0]) + L' ' + Wcm::ToQuoted(defaultShaderPaths[1]) + L' ';
+		Wcm::Execute(GetGeneratorPath(), L"\"--OutDir\" \"" + Wcm::GetBaseDirectory().native() + L'\"' + L" \"--ResList\" " + binaryResourceList + L"--DirList " + projectAssetDir.native());
 		const auto oldMemResBaseDir = basePaths[1];
 		basePaths[1].clear();
 		defaultShader.first.get() = Load<Shader>(Wcm::ToString(defaultShaderPaths[0]));
