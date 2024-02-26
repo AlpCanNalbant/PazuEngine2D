@@ -26,7 +26,7 @@ namespace Pazu
 		const std::string &GetBasePath(bool isMemory = false) const;
 		bool IsRelative() const;
 		void SetBasePath(const std::string &path, const std::source_location &location = std::source_location::current());
-		void SetBasePath(const std::string &path, bool isMemory, const std::source_location &location = std::source_location::current());
+		void SetBasePath(const std::string &path, const bool isMemory, const std::source_location &location = std::source_location::current());
 		void SetBasePath(const std::array<std::string, 2> &basePaths, const std::source_location &location = std::source_location::current());
 		void SetRelativeMode(bool enabled);
 

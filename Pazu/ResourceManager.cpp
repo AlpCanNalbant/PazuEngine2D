@@ -78,8 +78,9 @@ namespace Pazu
 		projectAssetDir = projectAssetDir.parent_path() / basePaths[1];
 		auto defaultShader = GetDefaultShader();
 		const auto &defaultShaderPaths = defaultShader.second;
-		std::wstring binaryResourceList = Wcm::ToQuoted(defaultShaderPaths[0]) + L' ' + Wcm::ToQuoted(defaultShaderPaths[1]) + L' ';
-		Wcm::Execute(GetGeneratorPath(), L"\"--OutDir\" \"" + Wcm::GetBaseDirectory().native() + L'\"' + L" \"--ResList\" " + binaryResourceList + L"--DirList " + projectAssetDir.native());
+		const std::wstring binaryResourceList = Wcm::ToQuoted(defaultShaderPaths[0]) + L' ' + Wcm::ToQuoted(defaultShaderPaths[1]);
+		Wcm::Execute(GetGeneratorPath(), Wcm::ToQuoted(L"--OutDir") + L' ' + Wcm::ToQuoted(Wcm::GetBaseDirectory().native()) + L' ' + Wcm::ToQuoted(L"--ResList")
+					 + L' ' + binaryResourceList + L' ' + Wcm::ToQuoted(L"--DirList") + L' ' + Wcm::ToQuoted(projectAssetDir.native()));
 		const auto oldMemResBaseDir = basePaths[1];
 		basePaths[1].clear();
 		defaultShader.first.get() = Load<Shader>(Wcm::ToString(defaultShaderPaths[0]));
@@ -88,7 +89,7 @@ namespace Pazu
 
     std::pair<std::reference_wrapper<std::shared_ptr<Shader>>, std::array<std::wstring, 2>> ResourceManager::GetDefaultShader() const
 	{ // Passed as a return value reference to the shader pointer and relative and absoulete paths of that shader file.
-		return {{DefaultShader}, {L"Assets/Shaders/default.shader", Wcm::GetSourceDirectory() / L"Assets/Shaders/default.shader"}};
+		return {{DefaultShader}, {L"Assets/Shaders/default.shader", Wcm::GetSourceDirectory().native() + L"\\Assets\\Shaders\\default.shader"}};
 	}
 
 	std::wstring ResourceManager::GetGeneratorPath() const
