@@ -20,7 +20,7 @@ namespace Pazu
 		Sprite &operator=(const Sprite &) = default;
 		Sprite &operator=(Sprite &&) = default;
 		void Render(const Camera *camera);
-		void Drag(const mathfu::vec2 &point, bool trigger);
+		bool Drag(const mathfu::vec2 &point, bool trigger);
 		float* GetVertices(GLuint& size) const;
 		GLuint* GetIndices(GLuint& size) const;
 		const std::shared_ptr<Material> &GetMaterial() const;
@@ -32,7 +32,7 @@ namespace Pazu
 		float GetHalfHeight() const;
 		float GetLongestSide() const;
 		bool IsPointInside(const mathfu::vec2 &point) const;
-		bool IsSelected(const mathfu::vec2 &point, bool trigger) const;
+		bool IsSelected(const mathfu::vec2 &point, const bool trigger) const;
 		void SetMaterial(const std::shared_ptr<Material> &material);
 		void SetDisableRender(bool disable);
 

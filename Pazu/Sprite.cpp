@@ -48,7 +48,7 @@ namespace Pazu
 		shader->Unuse();
 	}
 
-	void Sprite::Drag(const mathfu::vec2 &point, bool trigger)
+	bool Sprite::Drag(const mathfu::vec2 &point, const bool trigger)
 	{
 		static Sprite* currentSprite = nullptr;
 
@@ -78,6 +78,8 @@ namespace Pazu
 			mathfu::vec2 newObjCenter = touchPosition - currentSprite->offset;
 			currentSprite->position = newObjCenter;
 		}
+
+		return draggingMode;
 	}
 
 	float* Sprite::GetVertices(GLuint& size) const
