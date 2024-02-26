@@ -11,6 +11,7 @@ namespace Pazu
 	public:
 		void Initialize();
 		int GetFps(bool *show = nullptr);
+		float GetElapsed() const;
 		float GetDelta() const;
 		void Update();
 

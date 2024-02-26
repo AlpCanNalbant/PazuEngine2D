@@ -25,6 +25,11 @@ namespace Pazu
 		return fps;
 	}
 
+	float Time::GetElapsed() const
+	{
+		return static_cast<float>(SDL_GetTicks64());
+	}
+
 	float Time::GetDelta() const
 	{
 		return deltaTime;
