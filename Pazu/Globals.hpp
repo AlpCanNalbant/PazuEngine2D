@@ -92,5 +92,10 @@ namespace Pazu
 		value.erase(std::remove(value.begin(), value.end(), value[index]), value.end());
 	}
 
+	[[nodiscard]] constexpr bool IsEqual(const float lhs, const float rhs) noexcept
+	{
+		return std::fabs(lhs - rhs) < std::numeric_limits<float>::epsilon();
+	}
+
 	extern std::shared_ptr<Shader> DefaultShader;
 }
