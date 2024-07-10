@@ -9,6 +9,7 @@ public:
 	App(const Pazu::Configuration &config);
 	void Initialize() final;
 	void Load() final;
+	void PreUpdate() final;
 	void Update() final;
 	void PreRender() final;
 	void Render() final;

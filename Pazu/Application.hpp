@@ -23,6 +23,7 @@ namespace Pazu
 		void Shutdown();
 		virtual void Initialize() = 0;
 		virtual void Load() = 0;
+		virtual void PreUpdate() = 0;
 		virtual void Update() = 0;
 		virtual void PreRender() = 0;
 		virtual void Render() = 0;

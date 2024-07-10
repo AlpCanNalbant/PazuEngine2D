@@ -3,7 +3,7 @@
 #include "State.hpp"
 
 App::App(const Pazu::Configuration &config)
-	: Pazu::Application{config}, camera{std::make_shared<Pazu::Camera>(mathfu::vec2{35.0f, -5.0f})}, camController{std::make_shared<CameraController>(camera, input)} { }
+	: Pazu::Application{config}, camera{std::make_shared<Pazu::Camera>(mathfu::vec2{35.0f, -5.0f})}, camController{std::make_shared<CameraController>(camera, input)} {}
 
 void App::Initialize()
 {
@@ -15,6 +15,10 @@ void App::Initialize()
 }
 
 void App::Load()
+{
+}
+
+void App::PreUpdate()
 {
 }
 

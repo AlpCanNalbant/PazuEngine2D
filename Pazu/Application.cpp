@@ -10,9 +10,9 @@ namespace Pazu
 		: world{std::make_shared<World>()}, stateMgr{std::make_shared<StateManager>()}, resource{std::make_shared<ResourceManager>()}, input{std::make_shared<Input>()}, time{std::make_shared<Time>()}
 	{
 		Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "PazuEngine2D.log";
-    	Wcm::Log->Info("Pazu Engine 2D is has been started.");
+		Wcm::Log->Info("Pazu Engine 2D is has been started.");
 
-		if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
 		{
 			Wcm::Log->Error("Failed to initialize SDL.").Sub("SDLError", SDL_GetError());
 			return;
@@ -95,7 +95,7 @@ namespace Pazu
 		input->Initialize();
 		time->Initialize();
 
-    	Wcm::Log->Info("Pazu Engine 2D is successfully initialized.");
+		Wcm::Log->Info("Pazu Engine 2D is successfully initialized.");
 	}
 
 	void Application::Run()
@@ -107,6 +107,7 @@ namespace Pazu
 
 		while (!exitApp)
 		{
+			PreUpdate();
 			SDL_Event e;
 			while (SDL_PollEvent(&e))
 			{
@@ -142,7 +143,7 @@ namespace Pazu
 
 		Destroy();
 
-    	Wcm::Log->Info("Pazu Engine 2D is has been ended.");
+		Wcm::Log->Info("Pazu Engine 2D is has been ended.");
 	}
 
 	void Application::Shutdown()
@@ -150,10 +151,10 @@ namespace Pazu
 		exitApp = true;
 	}
 
-    void Application::Resize(int width, int height)
-    {
+	void Application::Resize(int width, int height)
+	{
 		world->Resize(width, height);
-    }
+	}
 
 	mathfu::vec2i Application::GetWindowPosition() const
 	{
