@@ -9,7 +9,7 @@ namespace Pazu
 	Application::Application(const Configuration &config)
 		: world{std::make_shared<World>()}, stateMgr{std::make_shared<StateManager>()}, resource{std::make_shared<ResourceManager>()}, input{std::make_shared<Input>()}, time{std::make_shared<Time>()}
 	{
-		Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "PazuEngine2D.log";
+		Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / config.logFileName;
 		Wcm::Log->Info("Pazu Engine 2D is has been started.");
 
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)

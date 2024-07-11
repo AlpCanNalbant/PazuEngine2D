@@ -14,5 +14,6 @@ namespace Pazu
 		int antialiasingLevel{16};
 		bool fullScreen{false};
 		bool borderless{false};
+		std::string logFileName{"PazuEngine2D.log"};
 	};
 }
