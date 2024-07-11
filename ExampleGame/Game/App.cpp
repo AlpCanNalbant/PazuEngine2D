@@ -7,6 +7,9 @@ App::App(const Pazu::Configuration &config)
 
 void App::Initialize()
 {
+	// If you don't set the path, you won't get any log output from the WinAPICommon library.
+	Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "ExampleGame.log";
+
 	SetVsync(true);
 	// resource->SetRelativeMode(false);
 	// resource->SetBasePath({Wcm::GetBaseDirectory() / "Assets", "Assets"});
