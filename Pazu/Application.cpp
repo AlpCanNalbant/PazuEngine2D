@@ -61,6 +61,8 @@ namespace Pazu
 		if (auto rawWindow = SDL_CreateWindow(config.title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, flags))
 		{
 			window = {rawWindow, SDL_DestroyWindow};
+			SDL_VERSION(&wmInfo.version);
+			SDL_GetWindowWMInfo(rawWindow, &wmInfo);
 		}
 		else
 		{

@@ -1,7 +1,9 @@
 // Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
 
 #pragma once
+#include "SDL2/SDL_syswm.h"
 #include "SDL2/SDL.h"
+
 #include "Configuration.hpp"
 #include "StateManager.hpp"
 #include "ResourceManager.hpp"
@@ -33,6 +35,7 @@ namespace Pazu
 		virtual void Unfocused() = 0;
 		mathfu::vec2i GetWindowPosition() const;
 		mathfu::vec2i GetWindowSize() const;
+		const auto &GetWindowInfo() const;
 		void SetVsync(int value);
 
 		bool exitApp{false};
@@ -45,6 +48,9 @@ namespace Pazu
 		std::shared_ptr<Time> time;
 
 	private:
-		std::unique_ptr<SDL_Window, void(*)(SDL_Window *)> window{nullptr, nullptr};
+		std::unique_ptr<SDL_Window, void (*)(SDL_Window *)> window{nullptr, nullptr};
+		SDL_SysWMinfo wmInfo;
 	};
 }
+
+#include "Application.inl"
