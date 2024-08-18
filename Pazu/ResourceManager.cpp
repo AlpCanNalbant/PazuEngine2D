@@ -79,8 +79,11 @@ namespace Pazu
 		auto defaultShader = GetDefaultShader();
 		const auto &defaultShaderPaths = defaultShader.second;
 		const std::wstring binaryResourceList = Wcm::ToQuoted(defaultShaderPaths[0]) + L' ' + Wcm::ToQuoted(defaultShaderPaths[1]);
-		Wcm::Execute(GetGeneratorPath(), Wcm::ToQuoted(L"--OutDir") + L' ' + Wcm::ToQuoted(Wcm::GetBaseDirectory().native()) + L' ' + Wcm::ToQuoted(L"--ResList")
-					 + L' ' + binaryResourceList + L' ' + Wcm::ToQuoted(L"--DirList") + L' ' + Wcm::ToQuoted(projectAssetDir.native()));
+		Wcm::Execute(GetGeneratorPath(),
+					 Wcm::ToQuoted(L"--LogFile") + L' ' + Wcm::ToQuoted((Wcm::GetBaseDirectory() / "PazuResource.log").native()) + L' ' +
+					 Wcm::ToQuoted(L"--OutDir")  + L' ' + Wcm::ToQuoted(Wcm::GetBaseDirectory().native()) 						 + L' ' +
+					 Wcm::ToQuoted(L"--ResList") + L' ' + binaryResourceList 													 + L' ' +
+					 Wcm::ToQuoted(L"--DirList") + L' ' + Wcm::ToQuoted(projectAssetDir.native()));
 		const auto oldMemResBaseDir = basePaths[1];
 		basePaths[1].clear();
 		defaultShader.first.get() = Load<Shader>(Wcm::ToString(defaultShaderPaths[0]));
